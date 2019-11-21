@@ -6,10 +6,32 @@ public class Main {
 
     public static void main(String[] args) {
 
-        calulator();
+        boolean isStop = false;
+
+        while(!isStop){
+            String choice =null;
+            System.out.println("Введите 1, чтобы воспользоваться калькулятором или 2 чтобы поиграться с массивами");
+            System.out.println("Чтобы выйти введите \"@exit\"");
+            choice = readFromConsole();
+            switch (choice) {
+                case("1"):
+                    calulator();
+                    isStop = true;
+                    break;
+                case("2"):
+                    minMaxStringArray();
+                    isStop = true;
+                    break;
+                case("@exit"):
+                    isStop = true;
+                    break;
+                default:
+                    System.out.println("Вы ввели неправильное действие, попробуйте еще раз");
+            }
+        }
     }
 
-    public static void calulator(){
+    public static void calulator() {
         double a, b;
         String deystvie;
         boolean isStop = false;
@@ -49,14 +71,18 @@ public class Main {
     }
 
 
-    /** Данный метод считывает  с консоли введеное пользователем  число*/
+    /**
+     * Данный метод считывает  с консоли введеное пользователем  число
+     */
     public static double readDoubleFromConsole() {
         double doub = 0;
         boolean isNumericCourse = false;
-        while(!isNumericCourse) {
+        while (!isNumericCourse) {
             try {
                 String str = readFromConsole();
-                if(str.contains(",")) { str = str.replace(",", "."); }
+                if (str.contains(",")) {
+                    str = str.replace(",", ".");
+                }
                 doub = Double.parseDouble(str);
                 isNumericCourse = true;
             } catch (NumberFormatException ex) {
@@ -66,7 +92,9 @@ public class Main {
         return doub;
     }
 
-    /** Данный метод считывает введеную пользователм строку с консоли*/
+    /**
+     * Данный метод считывает введеную пользователм строку с консоли
+     */
     public static String readFromConsole() {
         String result = null;
         try {
@@ -76,5 +104,50 @@ public class Main {
             System.out.println(e);
         }
         return result;
+    }
+
+    /** Метод создает и возвращает массив String'ов заданной пользователем длинны
+     * а так же пользоватеем и заполняется
+     * @return
+     */
+    public static String[] createStringArray() {
+        int x = 0;
+        String array[];
+        boolean isArrayCreate = false;
+        System.out.println("Введите необходимое кол-во элементов массива");
+        while (!isArrayCreate) {
+            try {
+                x = Integer.parseInt(readFromConsole());
+                isArrayCreate = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Вы ввели не число");
+            }
+        }
+
+        array = new String[x];
+        for (int i = 0; i < array.length; i++) {
+            System.out.println("Введите значение элемента №" + (i + 1));
+            array[i] = readFromConsole();
+        }
+        return array;
+    }
+
+    /**
+     * Метод ищет в массиве String[] самую длинную и самую короткую строки
+     */
+    public static void minMaxStringArray() {
+        String array[] = createStringArray();
+        String maxElement = array[0];
+        String minElement = array[0];
+
+        for (int i = 0; i < array.length; i++) {
+            if (maxElement.length() < array[i].length()) {
+                maxElement = array[i];
+            } else if (minElement.length() > array[i].length()){
+                minElement = array[i];
+            }
+        }
+        System.out.println("Минимальная по длинне строка \"" + minElement + "\"");
+        System.out.println("Максимальная по длинне строка \"" + maxElement + "\"");
     }
 }

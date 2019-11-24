@@ -25,6 +25,7 @@ public class Present {
         }
         System.out.println("Общий вес составляет: " + resultWight);
         System.out.println("Будьте добры оплатить: " + resultPrice);
+        System.out.println("\n");
     }
 
 
